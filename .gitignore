@@ -1,0 +1,72 @@
+### Kotlin / Java ###
+*.class
+*.jar
+*.war
+*.ear
+out/
+build/
+target/
+
+### Gradle ###
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle-cache/
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea_modules/
+
+# IntelliJ specific files
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/contentModel.xml
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/libraries
+
+# IntelliJ log files
+.idea/**/gradle.xml
+.idea/**/libraries/
+.idea/caches/
+.idea/modules.xml
+.idea/.name
+
+# User-specific
+*.swp
+*.swo
+*.bak
+*.tmp
+
+### OS / System ###
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+### Logs ###
+*.log
+
+### Kotlin specific ###
+*.kotlin_metadata
+*.kotlin_module
+*.kotlin_builtins
+
+### Other ###
+/bin/
+/dist/
+/out/
+/target/
+/tmp/

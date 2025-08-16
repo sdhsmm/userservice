@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: userservice
+  datasource:
+    url: jdbc:h2:file:./data/userservice;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+app:
+  jwt:
+    secret: verysecretchangemeverysecretchangeme
+    expiration-ms: 300000 #3600000
+
+server:
+  port: 8080
