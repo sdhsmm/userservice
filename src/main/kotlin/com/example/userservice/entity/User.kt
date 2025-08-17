@@ -20,6 +20,10 @@ data class User(
     var enabled: Boolean = true,
     var locked: Boolean = false,
 
+    // New: unique user code (6-char alphanumeric, uppercase)
+    @Column(name = "orgid", nullable = false, unique = true, length = 10)
+    var orgId: String = "",
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_roles",

@@ -28,6 +28,7 @@ class JwtUtils(@Value("\${app.jwt.secret}") private val secret: String,
         return Jwts.builder()
             .setSubject(user.username.toString())
             .claim("roles", roles)
+            .claim("orgid", user.orgId)
             .setIssuedAt(now)
             .setExpiration(expiry)
             .signWith(key, SignatureAlgorithm.HS256)
@@ -37,9 +38,12 @@ class JwtUtils(@Value("\${app.jwt.secret}") private val secret: String,
     fun generateRefreshToken(user: User): Pair<String, Instant> {
         val ttl = Duration.ofDays(7)
         val now = Date()
+        val roles = user.roles.map { it.name }
         val expiry = Date(now.time + ttl.toMillis())
         val token = Jwts.builder()
-            .setSubject(user.id.toString())
+            .setSubject(user.username.toString())
+            .claim("roles", roles)
+            .claim("orgid", user.orgId)
             .setIssuedAt(now)
             .setExpiration(expiry)
             .signWith(Keys.hmacShaKeyFor(secret.toByteArray()), SignatureAlgorithm.HS256)
