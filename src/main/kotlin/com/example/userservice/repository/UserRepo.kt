@@ -11,6 +11,7 @@ interface UserRepository : JpaRepository<User, Long> {
     fun existsByEmail(email: String): Boolean
     fun existsByUsername(username: String): Boolean
     fun findByUsername(username: String): User?
+    fun findByOrgId(orgid: String): User?
 }
 
 interface RefreshTokenRepository : JpaRepository<RefreshToken, Long> {

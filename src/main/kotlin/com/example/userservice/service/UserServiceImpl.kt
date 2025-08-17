@@ -4,8 +4,10 @@ import com.example.userservice.config.JwtUtils
 import com.example.userservice.dto.AuthResponse
 import com.example.userservice.dto.LoginRequest
 import com.example.userservice.dto.UserRegisterRequest
+import com.example.userservice.entity.OrgIdSequence
 import com.example.userservice.entity.User
 import com.example.userservice.enum.RoleType
+import com.example.userservice.repository.OrgIdSequenceRepository
 import com.example.userservice.repository.UserRepository
 import com.example.userservice.service.auth.TokenBlacklistService
 import jakarta.servlet.http.HttpServletRequest
@@ -14,18 +16,21 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import kotlin.jvm.optionals.getOrElse
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserServiceImpl(
     private val roleService: RoleService,
+    private val orgIdGenerator: OrgIdGenerator,
     private val userRepository: UserRepository,
+    private val orgIdSequenceRepository: OrgIdSequenceRepository,
     private val passwordEncoder: PasswordEncoder,
     private val jwtUtil: JwtUtils,
     private val tokenBlacklistService: TokenBlacklistService,
     @Value("\${app.jwt.expiration-ms}") private val expMs: Long
 ): UserService {
 
+    @Transactional
     override fun register(userRegisterDto: UserRegisterRequest): ResponseEntity<String> {
         if (userRepository.findByEmail(userRegisterDto.email) != null){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists")
@@ -33,12 +38,16 @@ class UserServiceImpl(
         val roles = mutableSetOf(roleService.getRole(RoleType.ROLE_USER)
                 ?: throw IllegalStateException("ROLE_USER not found"))
 
+        val seq = orgIdSequenceRepository.save(OrgIdSequence()).id
+        val orgId = orgIdGenerator.generateOrgId(seq)
+
         val user = User(
             username = userRegisterDto.username?: (userRegisterDto.firstName + "@" + userRegisterDto.email),
             email = userRegisterDto.email,
             firstName = userRegisterDto.firstName,
             lastName = userRegisterDto.lastName,
             passwordHash = passwordEncoder.encode(userRegisterDto.password),
+            orgId = orgId,
             roles = roles
         )
         userRepository.save(user)
