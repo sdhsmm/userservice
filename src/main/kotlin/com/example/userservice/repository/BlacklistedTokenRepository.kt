@@ -8,5 +8,6 @@ import java.time.Instant
 @Repository
 interface BlacklistedTokenRepository : JpaRepository<BlacklistedToken, String> {
     fun existsByToken(token: String): Boolean
+
     fun deleteByExpiryDateBefore(now: Instant)
 }

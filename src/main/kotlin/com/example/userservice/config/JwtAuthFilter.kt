@@ -11,18 +11,18 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
+
 @Component
 class JwtAuthFilter(
     private val jwtUtil: JwtUtils,
     private val customUserDetailsService: CustomUserDetailsService,
-    private val tokenBlacklistService: TokenBlacklistService
+    private val tokenBlacklistService: TokenBlacklistService,
 ) : OncePerRequestFilter() {
-
     @Throws(ServletException::class, java.io.IOException::class)
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        filterChain: FilterChain
+        filterChain: FilterChain,
     ) {
         val authHeader = request.getHeader("Authorization")
         var username: String? = null
@@ -41,9 +41,12 @@ class JwtAuthFilter(
             val userDetails = customUserDetailsService.loadUserByUsername(username)
 
             if (jwtUtil.validateToken(token!!, userDetails) && !tokenBlacklistService.isTokenBlacklisted(token)) {
-                val authToken = UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.authorities
-                )
+                val authToken =
+                    UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.authorities,
+                    )
                 authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
                 SecurityContextHolder.getContext().authentication = authToken
             }

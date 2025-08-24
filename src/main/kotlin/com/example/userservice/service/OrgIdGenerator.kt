@@ -5,7 +5,6 @@ import java.util.concurrent.locks.ReentrantLock
 
 @Service
 class OrgIdGenerator {
-
     private val alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     private val lock = ReentrantLock()
 

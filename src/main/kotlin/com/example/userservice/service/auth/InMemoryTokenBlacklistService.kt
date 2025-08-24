@@ -5,10 +5,10 @@ import com.example.userservice.service.auth.TokenBlacklistService
 import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
 
+// @Primary
 @Service
-//@Primary
-class InMemoryTokenBlacklistService (
-    private val jwtUtil: JwtUtils
+class InMemoryTokenBlacklistService(
+    private val jwtUtil: JwtUtils,
 ) : TokenBlacklistService {
     private val blacklist = ConcurrentHashMap<String, Long>()
 

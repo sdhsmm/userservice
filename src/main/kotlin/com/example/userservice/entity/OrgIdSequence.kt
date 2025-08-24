@@ -11,5 +11,5 @@ import jakarta.persistence.Table
 data class OrgIdSequence(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0
+    val id: Long = 0,
 )

@@ -10,11 +10,12 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 
-@Entity @Table(name = "roles")
-data class Role(
+@Entity
+@Table(name = "roles")
+ class Role(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     @Enumerated(EnumType.STRING) // Store as string in DB
     @Column(nullable = false, unique = true)
-    val name: RoleType // e.g. ROLE_USER, ROLE_ADMIN
+    val name: RoleType, // e.g. ROLE_USER, ROLE_ADMIN
 )

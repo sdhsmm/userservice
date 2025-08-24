@@ -7,20 +7,15 @@ import org.springframework.stereotype.Service
 import java.util.concurrent.TimeUnit
 
 @Service
-class RedisTokenBlacklistService (
+class RedisTokenBlacklistService(
     private val redisTemplate: StringRedisTemplate,
-    private val jwtUtil: JwtUtils
-    ) : TokenBlacklistService {
-
-
-
+    private val jwtUtil: JwtUtils,
+) : TokenBlacklistService {
     override fun blacklistToken(token: String) {
         val expiration = jwtUtil.extractExpiration(token)
         val ttl = expiration.time - System.currentTimeMillis()
         redisTemplate.opsForValue().set(token, "blacklisted", ttl, TimeUnit.MILLISECONDS)
     }
 
-    override fun isTokenBlacklisted(token: String): Boolean {
-        return redisTemplate.hasKey(token)
-    }
+    override fun isTokenBlacklisted(token: String): Boolean = redisTemplate.hasKey(token)
 }
