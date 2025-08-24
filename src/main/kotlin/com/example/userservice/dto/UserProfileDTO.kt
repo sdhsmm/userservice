@@ -32,3 +32,13 @@ fun WriteUserProfileDTO.toEntity(user: User): UserProfile =
         profilePicUrl = this.profilePicUrl,
         user = user
     )
+
+fun WriteUserProfileDTO.toExistingEntity(user: User, userProfile: UserProfile) =
+    userProfile.also { profile ->
+        firstName?.let { profile.firstName = it }
+        middleName?.let { profile.middleName = it }
+        lastName?.let { profile.lastName = it }
+        phone?.let { profile.phone = it }
+        address?.let { profile.address = it }
+        profilePicUrl?.let { profile.profilePicUrl = it }
+    }

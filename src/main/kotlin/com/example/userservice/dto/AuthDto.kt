@@ -1,7 +1,7 @@
 package com.example.userservice.dto
 
-import com.example.userservice.entity.User
-import com.example.userservice.entity.UserProfile
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 
 data class UserRegisterRequest(
     val email: String,
@@ -45,10 +45,10 @@ data class UpdateProfileRequest(
 )
 
 data class ErrorResponse(
-    val timestamp: String,
+    val timestamp: String? = OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
     val status: Int,
     val error: String,
     val message: String?,
-    val path: String
+    val path: String?
 )
 

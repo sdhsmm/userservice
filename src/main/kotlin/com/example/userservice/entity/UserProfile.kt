@@ -1,7 +1,6 @@
 package com.example.userservice.entity
 
 import com.example.userservice.dto.ReadUserProfileDTO
-import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -21,7 +20,7 @@ data class UserProfile(
     var dob: String? = null,
     var phone: String? = null,
     var address: String? = null,
-    val profilePicUrl: String? = null,
+    var profilePicUrl: String? = null,
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     val user: User,
