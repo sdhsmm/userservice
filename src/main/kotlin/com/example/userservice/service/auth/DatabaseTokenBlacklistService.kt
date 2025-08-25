@@ -13,9 +13,8 @@ import java.time.Instant
 @Primary
 class DatabaseTokenBlacklistService(
     private val repository: BlacklistedTokenRepository,
-    private val jwtUtils: JwtUtils
-): TokenBlacklistService {
-
+    private val jwtUtils: JwtUtils,
+) : TokenBlacklistService {
     override fun blacklistToken(token: String) {
         if (!repository.existsByToken(token)) {
             val expiryDate = jwtUtils.extractExpiration(token).toInstant()
@@ -23,9 +22,7 @@ class DatabaseTokenBlacklistService(
         }
     }
 
-    override fun isTokenBlacklisted(token: String): Boolean {
-        return repository.existsByToken(token)
-    }
+    override fun isTokenBlacklisted(token: String): Boolean = repository.existsByToken(token)
 
     @Scheduled(fixedRate = 3600000)
     fun cleanupExpiredTokens() {

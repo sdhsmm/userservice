@@ -6,7 +6,5 @@ import org.springframework.stereotype.Component
 
 @Component
 class AppCache {
-
     val roles: MutableMap<RoleType, Role> = mutableMapOf()
-
 }

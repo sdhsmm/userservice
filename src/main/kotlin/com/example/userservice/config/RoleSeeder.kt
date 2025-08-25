@@ -7,8 +7,9 @@ import jakarta.annotation.PostConstruct
 import org.springframework.stereotype.Component
 
 @Component
-class RoleSeeder(private val roleRepository: RoleRepository) {
-
+class RoleSeeder(
+    private val roleRepository: RoleRepository,
+) {
     @PostConstruct
     fun initRoles() {
         val defaultRoles = RoleType.entries
