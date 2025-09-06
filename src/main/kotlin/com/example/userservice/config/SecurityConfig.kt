@@ -24,6 +24,7 @@ class SecurityConfig(
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
+            .cors {  } // <-- enable CORS
             .headers { headers -> headers.frameOptions { frame -> frame.sameOrigin() } }
             .csrf { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
@@ -31,8 +32,8 @@ class SecurityConfig(
                 it
                     .requestMatchers(
                         "/favicon.ico",
-                        "/api/auth/register/**",
-                        "/api/auth/login/**",
+                        "/api/register/**",
+                        "/api/login/**",
                         "/actuator/health",
                         "/h2-console/**",
                         "data:image/**",
