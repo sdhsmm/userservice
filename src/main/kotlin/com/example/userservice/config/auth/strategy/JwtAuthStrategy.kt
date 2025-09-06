@@ -33,7 +33,7 @@ class JwtAuthStrategy(
             )
         }
         var username: String? = null
-        val userDetails: UserDetails? = null
+        var userDetails: UserDetails? = null
         val token = authHeader.removePrefix("Bearer ").trim()
         try {
             username = jwtUtil.parseClaims(token).subject
@@ -43,7 +43,7 @@ class JwtAuthStrategy(
 
         // Validate token
         if (username != null && SecurityContextHolder.getContext().authentication == null) {
-            val userDetails = customUserDetailsService.loadUserByUsername(username)
+            userDetails = customUserDetailsService.loadUserByUsername(username)
             if (!jwtUtil.validateToken(token, userDetails) || tokenBlacklistService.isTokenBlacklisted(token)) {
                 return AuthenticationResult(
                     status = AuthStatus.FAILURE,
