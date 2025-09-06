@@ -28,4 +28,5 @@ server:
 logging:
   level:
     org.springframework.security: DEBUG
-
+auth:
+  types: basic,jwt,sso
