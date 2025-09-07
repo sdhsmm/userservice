@@ -1,5 +1,6 @@
 package com.example.userservice.service.auth
 
+import com.example.auth_api.TokenBlacklistService
 import com.example.userservice.config.JwtUtils
 import com.example.userservice.dto.AuthResponse
 import com.example.userservice.dto.LoginRequest

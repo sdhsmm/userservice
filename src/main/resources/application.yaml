@@ -18,6 +18,8 @@ spring:
       port: 6379
 
 app:
+  auth:
+    types: basic,sso,jwt
   jwt:
     secret: verysecretchangemeverysecretchangeme
     enabled: true
@@ -36,8 +38,6 @@ server:
 logging:
   level:
     org.springframework.security: DEBUG
-auth:
-  types: basic,jwt,sso
 
 management:
   endpoints:

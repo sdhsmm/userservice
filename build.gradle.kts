@@ -27,6 +27,7 @@ configurations.all {
 
 dependencies {
     implementation(project(":jwt-auth-lib"))
+    implementation(project(":auth-api"))
     /*implementation("com.example:jwt-auth-lib:0.1.0-SNAPSHOT"){
         isChanging = true
     }*/

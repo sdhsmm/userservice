@@ -1,22 +1,12 @@
 package com.example.userservice.service
 
-import com.example.userservice.config.JwtUtils
-import com.example.userservice.dto.AuthResponse
-import com.example.userservice.dto.LoginRequest
 import com.example.userservice.dto.UserRegisterRequest
-import com.example.userservice.dto.toWriteUserProfileDTO
 import com.example.userservice.entity.OrgIdSequence
 import com.example.userservice.entity.User
 import com.example.userservice.enum.RoleType
 import com.example.userservice.exception.ResourceNotFoundException
 import com.example.userservice.repository.OrgIdSequenceRepository
 import com.example.userservice.repository.UserRepository
-import com.example.userservice.service.auth.TokenBlacklistService
-import com.example.userservice.service.profile.UserProfileService
-import jakarta.servlet.http.HttpServletRequest
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

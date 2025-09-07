@@ -1,5 +1,9 @@
 package com.example.userservice.config.auth.strategy
 
+import com.example.auth_api.AuthStatus
+import com.example.auth_api.AuthStrategy
+import com.example.auth_api.AuthType
+import com.example.auth_api.AuthenticationResult
 import jakarta.servlet.http.HttpServletRequest
 
 class CompositeAuthStrategy(
@@ -17,5 +21,9 @@ class CompositeAuthStrategy(
             }
         }
         return AuthenticationResult(AuthStatus.FAILURE)
+    }
+
+    override fun type(): AuthType {
+        return AuthType.COMPOSITE
     }
 }
