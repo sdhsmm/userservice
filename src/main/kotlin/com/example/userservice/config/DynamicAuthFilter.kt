@@ -2,8 +2,6 @@ package com.example.userservice.config
 
 import com.example.userservice.config.auth.strategy.CompositeAuthStrategy
 import com.example.userservice.service.auth.AuthStrategyFactory
-import com.example.userservice.service.auth.CustomUserDetailsService
-import com.example.userservice.service.auth.TokenBlacklistService
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
@@ -29,7 +27,7 @@ class DynamicAuthFilter(
         val composite = CompositeAuthStrategy(strategies)
         val result = composite.authenticate(request)
 
-        if(result.isAuthenticated){
+        if(SecurityContextHolder.getContext().authentication == null && result.isAuthenticated){
             val userDetails = result.userDetails
             val authToken =
                 UsernamePasswordAuthenticationToken(

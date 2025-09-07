@@ -6,11 +6,8 @@ import com.example.userservice.service.auth.TokenBlacklistService
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.http.HttpServletRequest
 import org.slf4j.MDC
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
-import kotlin.text.removePrefix
-import kotlin.text.startsWith
 
 
 private val logger = KotlinLogging.logger {}
@@ -42,14 +39,14 @@ class JwtAuthStrategy(
         }
 
         // Validate token
-        if (username != null && SecurityContextHolder.getContext().authentication == null) {
-            userDetails = customUserDetailsService.loadUserByUsername(username)
-            if (!jwtUtil.validateToken(token, userDetails) || tokenBlacklistService.isTokenBlacklisted(token)) {
+        if (username != null) {
+            if (!jwtUtil.validateToken(token) || tokenBlacklistService.isTokenBlacklisted(token)) {
                 return AuthenticationResult(
                     status = AuthStatus.FAILURE,
                     errorMessage = "Invalid or expired JWT",
                 )
             }
+            userDetails = customUserDetailsService.loadUserByUsername(username)
         }
 
 

@@ -1,0 +1,12 @@
+# Generate a 2048-bit RSA private key (PKCS#8 format)
+openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
+
+# Extract the RSA public key
+openssl rsa -pubout -in private_key.pem -out public_key.pem
+
+
+# Generate EC private key (P-256 curve)
+openssl ecparam -genkey -name prime256v1 -noout -out ec_private_key.pem
+
+# Extract EC public key
+openssl ec -in ec_private_key.pem -pubout -out ec_public_key.pem

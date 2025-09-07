@@ -20,7 +20,15 @@ spring:
 app:
   jwt:
     secret: verysecretchangemeverysecretchangeme
-    expiration-ms: 300000 #3600000
+    enabled: true
+    auth:
+      algorithm: RS256   # or ES256
+    expiration-seconds: 3600
+    expiration-ms: 30000000
+    rsa:
+      privateKeyFile: classpath:key/private_key.pem
+      publicKeyFile: classpath:key/public_key.pem
+    
 
 server:
   port: 8080
@@ -30,3 +38,10 @@ logging:
     org.springframework.security: DEBUG
 auth:
   types: basic,jwt,sso
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
