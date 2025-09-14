@@ -34,7 +34,9 @@ class SecurityConfig(
                         "/favicon.ico",
                         "/api/register/**",
                         "/api/login/**",
-                        "/actuator/health",
+                        "/auth/jal/**",
+                        "/actuator/**",
+                        "/debug/**",
                         "/h2-console/**",
                         "data:image/**",
                     ).permitAll()

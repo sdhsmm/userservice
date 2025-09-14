@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.time.Duration
 import java.time.Instant
@@ -26,7 +25,7 @@ class JwtUtils(
         val key = Keys.hmacShaKeyFor(secret.toByteArray())
         return Jwts
             .builder()
-            .setSubject(user.username.toString())
+            .setSubject(user.username)
             .claim("roles", roles)
             .claim("orgid", user.orgId)
             .setIssuedAt(now)
@@ -43,7 +42,7 @@ class JwtUtils(
         val token =
             Jwts
                 .builder()
-                .setSubject(user.username.toString())
+                .setSubject(user.username)
                 .claim("roles", roles)
                 .claim("orgid", user.orgId)
                 .setIssuedAt(now)
@@ -73,10 +72,8 @@ class JwtUtils(
 
     fun validateToken(
         token: String,
-        userDetails: UserDetails,
     ): Boolean {
-        val username = extractUsername(token)
-        return (username == userDetails.username && !isTokenExpired(token))
+        return (!isTokenExpired(token))
     }
 
     private fun isTokenExpired(token: String): Boolean = extractExpiration(token).before(Date())
