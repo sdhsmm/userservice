@@ -13,7 +13,7 @@ import java.util.Date
 
 @Component
 class JwtUtils(
-    @Value("\${app.jwt.secret}") private val secret: String,
+    @Value("\${app.jwt.hmac.secret}") private val secret: String,
     @Value("\${app.jwt.expiration-ms}") private val expMs: Long,
 ) {
     fun accessTtlSeconds() = expMs / 1000
