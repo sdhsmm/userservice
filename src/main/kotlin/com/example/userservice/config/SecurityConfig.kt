@@ -32,9 +32,8 @@ class SecurityConfig(
                 it
                     .requestMatchers(
                         "/favicon.ico",
-                        "/api/register/**",
+                        "/api/user/register/**",
                         "/api/login/**",
-                        "/auth/jal/**",
                         "/actuator/**",
                         "/debug/**",
                         "/h2-console/**",

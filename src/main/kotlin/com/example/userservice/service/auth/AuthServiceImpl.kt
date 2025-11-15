@@ -25,28 +25,9 @@ class AuthServiceImpl(
     private val passwordEncoder: PasswordEncoder,
     private val jwtUtils: JwtUtils,
     @Value("\${app.jwt.expiration-ms}") private val expMs: Long
-): AuthService {
+) {
 
-    @Transactional
-    override fun register(userRegisterDto: UserRegisterRequest): User {
-        val registeredUser = userService.createUser(userRegisterDto)
-        userProfileService.createUserProfile(registeredUser.id, userRegisterDto.toWriteUserProfileDTO())
-        return registeredUser
-    }
-
-    override fun login(req: LoginRequest): ResponseEntity<AuthResponse> {
-       val employee =
-           userService.getUserByEmail(req.email)
-       val match = passwordEncoder.matches(req.password, employee.passwordHash)
-       return if (match) {
-           val token = jwtUtils.generateAccessToken(employee)
-           ResponseEntity.ok(AuthResponse(accessToken = token, expiresIn = expMs))
-       } else {
-           ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-       }
-    }
-
-    override fun logout(request: HttpServletRequest): ResponseEntity<String> {
+    fun logout(request: HttpServletRequest): ResponseEntity<String> {
         val authHeader =
             request.getHeader("Authorization")
                 ?: return ResponseEntity.badRequest().body("No token provided")

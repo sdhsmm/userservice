@@ -3,7 +3,6 @@ package com.example.userservice.controller
 import com.example.userservice.dto.ReadUserProfileDTO
 import com.example.userservice.dto.WriteUserProfileDTO
 import com.example.userservice.entity.toReadUserProfileDTO
-import com.example.userservice.exception.ResourceNotFoundException
 import com.example.userservice.service.auth.getLoggedInUser
 import com.example.userservice.service.profile.UserProfileService
 import org.springframework.http.ResponseEntity
